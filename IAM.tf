@@ -26,12 +26,14 @@ resource "aws_iam_group_membership" "assignment1" {
 }
 
 # Attaching policy to SysAdmin Group
+
 resource "aws_iam_group_policy_attachment" "admin" {
   group      = aws_iam_group.SysAdmin.name
   policy_arn = "arn:aws:iam::aws:policy/job-function/SystemAdministrator"
 }
 
 # Create DBAdmin Group and users
+
 resource "aws_iam_group" "DBAdmin" {
   name = "DBAdmin"
 }
@@ -129,38 +131,38 @@ resource "aws_iam_account_password_policy" "strict" {
   require_uppercase_characters   = true
   require_symbols                = true
   allow_users_to_change_password = true
-  
+
 }
 
 #Create IAM role
 
-resource "aws_iam_role" "EC2-JENKINSROLE" {
-  name = "EC2-JENKINSROLE"
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Action = "sts:AssumeRole"
-        Effect = "Allow"
-        Sid    = ""
-        Principal = {
-          Service = "ec2.amazonaws.com"
-        }
-      },
-    ]
-  })
-}
+# resource "aws_iam_role" "EC2-JENKINSROLE" {
+#   name = "EC2-JENKINSROLE"
+#   assume_role_policy = jsonencode({
+#     Version = "2012-10-17"
+#     Statement = [
+#       {
+#         Action = "sts:AssumeRole"
+#         Effect = "Allow"
+#         Sid    = ""
+#         Principal = {
+#           Service = "ec2.amazonaws.com"
+#         }
+#       },
+#     ]
+#   })
+# }
 
-# Attach role to policy
+# # Attach role to policy
 
-resource "aws_iam_role_policy_attachment" "EC2-role" {
-  role       = aws_iam_role.EC2-JENKINSROLE.name
-  policy_arn = "arn:aws:iam::432898149300:role/EC2-JENKINSROLE"
-}
+# resource "aws_iam_role_policy_attachment" "EC2-role" {
+#   role       = aws_iam_role.EC2-JENKINSROLE.name
+#   policy_arn = "arn:aws:iam::432898149300:role/EC2-JENKINSROLE"
+# }
 
-# Attach role an instance profile
+# # Attach role an instance profile
 
-resource "aws_iam_instance_profile" "ec2_profile" {
-  name       = "ec2_profile"
-  role       = aws_iam_role.EC2-JENKINSROLE.name
-}
+# resource "aws_iam_instance_profile" "ec2_profile" {
+#   name = "ec2_profile"
+#   role = aws_iam_role.EC2-JENKINSROLE.name
+# }

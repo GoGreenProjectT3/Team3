@@ -4,7 +4,7 @@ resource "aws_sns_topic" "EC2_STATE" {
 resource "aws_sns_topic_subscription" "ec2_sns_target" {
   topic_arn = aws_sns_topic.EC2_STATE.arn
   protocol  = "email"
-  endpoint  = "gulshantoirjonova@gmail.com"
+  endpoint  = "sgiscardn@gmail.com"
 }
 resource "aws_sns_topic_policy" "default" {
   arn    = aws_sns_topic.EC2_STATE.arn
@@ -32,6 +32,7 @@ resource "aws_cloudwatch_event_rule" "console" {
 "state": ["pending", "running", "terminated"]
 }
 }
+
 PATTERN
 }
 resource "aws_cloudwatch_event_target" "sns" {

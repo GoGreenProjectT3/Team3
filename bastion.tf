@@ -1,18 +1,18 @@
 resource "aws_instance" "bastion" {
-  ami                         = "ami-0d9858aa3c6322f73"
-  subnet_id                   = aws_subnet.public_subnet1a.id
+  ami                         = data.aws_ami.amznlx2.id
+  subnet_id                   = aws_subnet.public_subnet1.id
   instance_type               = "t2.micro"
   vpc_security_group_ids      = [aws_security_group.bastion.id]
   associate_public_ip_address = true
-  key_name                    = "ggreen-key"
+  key_name                    = "ggren-key"
   tags = {
     "Name" = "Bastion-EC2"
   }
 }
-resource "aws_eip" "bastion" {
-  instance = aws_instance.bastion.id
-  vpc      = true
-}
+# resource "aws_eip" "bastion" {
+#   instance = aws_instance.bastion.id
+#   vpc      = true
+# }
 
 
 resource "aws_security_group" "bastion" {

@@ -1,4 +1,5 @@
 # Create VPC
+
 resource "aws_vpc" "main" {
   cidr_block = "10.0.0.0/16"
   tags = {
@@ -7,62 +8,69 @@ resource "aws_vpc" "main" {
 }
 
 # Create Public Subnet
-resource "aws_subnet" "public_subnet1a" {
+
+resource "aws_subnet" "public_subnet1" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.0.1.0/24"
-  availability_zone = "us-west-1a"
+  availability_zone = "us-east-1a"
   tags = {
     Name = "Public-Subnet1"
   }
 }
 # Create Public Subnet
-resource "aws_subnet" "public_subnet2c" {
+
+resource "aws_subnet" "public_subnet2" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.0.2.0/24"
-  availability_zone = "us-west-1a"
+  availability_zone = "us-east-1b"
   tags = {
     Name = "Public-Subnet2"
   }
 }
 
 # Create Private Subnet
-resource "aws_subnet" "private_subnet1a" {
+
+resource "aws_subnet" "private_subnet1" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.0.3.0/24"
-  availability_zone = "us-west-1a"
+  availability_zone = "us-east-1a"
   tags = {
     Name = "Private-Subnet1"
   }
 }
 # Create Private Subnet
-resource "aws_subnet" "private_subnet2c" {
+
+resource "aws_subnet" "private_subnet2" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.0.4.0/24"
-  availability_zone = "us-west-1c"
+  availability_zone = "us-east-1b"
   tags = {
     Name = "Private-Subnet2"
   }
 }
 # Create Private Subnet
-resource "aws_subnet" "private_subnet3a" {
+
+resource "aws_subnet" "private_subnet3" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.0.5.0/24"
-  availability_zone = "us-west-1a"
+  availability_zone = "us-east-1a"
   tags = {
     Name = "Private-Subnet3"
   }
 }
 # Create Private Subnet
-resource "aws_subnet" "private_subnet4c" {
+
+resource "aws_subnet" "private_subnet4" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.0.6.0/24"
-  availability_zone = "us-west-1c"
+  availability_zone = "us-east-1b"
   tags = {
     Name = "Private-Subnet4"
   }
 }
 
 # Creating Internet Gateway
+
 resource "aws_internet_gateway" "internet_gateway" {
   vpc_id = aws_vpc.main.id
   tags = {
@@ -71,14 +79,16 @@ resource "aws_internet_gateway" "internet_gateway" {
 }
 
 # Creating EIP
+
 resource "aws_eip" "nat_gateway1" {
   vpc = true
 }
 
 # Creating NAT Gateway
+
 resource "aws_nat_gateway" "nat_gateway1" {
   allocation_id = aws_eip.nat_gateway1.id
-  subnet_id     = aws_subnet.public_subnet1a.id
+  subnet_id     = aws_subnet.public_subnet1.id
 
   tags = {
     Name = "gw NAT"
@@ -102,6 +112,7 @@ resource "aws_nat_gateway" "nat_gateway1" {
 
 
 # Creating Public Route Table
+
 resource "aws_route_table" "public_route_table" {
   vpc_id = aws_vpc.main.id
 
@@ -116,6 +127,7 @@ resource "aws_route_table" "public_route_table" {
 }
 
 # Creating Private Route Table
+
 resource "aws_route_table" "private_route_table" {
   vpc_id = aws_vpc.main.id
 
@@ -130,38 +142,44 @@ resource "aws_route_table" "private_route_table" {
   }
 }
 
-
-
-
 # Route Table association with Public Subnet
+
 resource "aws_route_table_association" "public1" {
-  subnet_id      = aws_subnet.public_subnet1a.id
+  subnet_id      = aws_subnet.public_subnet1.id
   route_table_id = aws_route_table.public_route_table.id
 }
 # Route Table association with Public Subnet
+
 resource "aws_route_table_association" "public2" {
-  subnet_id      = aws_subnet.public_subnet2c.id
+  subnet_id      = aws_subnet.public_subnet2.id
   route_table_id = aws_route_table.public_route_table.id
 }
 
 
 # Route Table association with Private Subnet
+
 resource "aws_route_table_association" "private1" {
-  subnet_id      = aws_subnet.private_subnet1a.id
+  subnet_id      = aws_subnet.private_subnet1.id
   route_table_id = aws_route_table.private_route_table.id
 }
+
 # Route Table association with Private Subnet
+
 resource "aws_route_table_association" "private2" {
-  subnet_id      = aws_subnet.private_subnet2c.id
+  subnet_id      = aws_subnet.private_subnet2.id
   route_table_id = aws_route_table.private_route_table.id
 }
+
 # Route Table association with Private Subnet
+
 resource "aws_route_table_association" "private3" {
-  subnet_id      = aws_subnet.private_subnet3a.id
+  subnet_id      = aws_subnet.private_subnet3.id
   route_table_id = aws_route_table.private_route_table.id
 }
+
 # Route Table association with Private Subnet
+
 resource "aws_route_table_association" "private4" {
-  subnet_id      = aws_subnet.private_subnet4c.id
+  subnet_id      = aws_subnet.private_subnet4.id
   route_table_id = aws_route_table.private_route_table.id
 }

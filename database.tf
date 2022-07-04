@@ -1,5 +1,3 @@
-
-
 resource "aws_db_instance" "project-1" {
   allocated_storage    = 20
   identifier           = "mysql-db-01"
@@ -13,20 +11,8 @@ resource "aws_db_instance" "project-1" {
   skip_final_snapshot  = true
 }
 
-resource "aws_db_instance" "project-2" {
-  allocated_storage    = 20
-  identifier           = "mysql-db-02"
-  engine               = "mysql"
-  engine_version       = "5.7"
-  instance_class       = "db.t2.micro"
-  name                 = "db_name"
-  username             = "admin"
-  password             = "password"
-  parameter_group_name = "default.mysql5.7"
-  skip_final_snapshot  = true
-}
-# Create Security Group for Database
 # terraform aws create security group
+
 resource "aws_security_group" "SecurityGroupDB" {
   name        = "Database Security Group"
   description = "Enable MySQL on Port 3306"
@@ -56,6 +42,56 @@ resource "aws_security_group" "SecurityGroupDB" {
     Name = "SecurityGroupDB Security Group"
   }
 }
+
+resource "aws_ssm_parameter" "endpoint" {
+  name        = "/example/endpoint"
+  description = "Endpoint parameter"
+  type        = "SecureString"
+  value       = aws_db_instance.project-1.endpoint
+}
+
+resource "aws_ssm_parameter" "database" {
+  name        = "/example/database"
+  description = "Database parameter"
+  type        = "SecureString"
+  value       = "db_name"
+}
+
+
+
+resource "aws_ssm_parameter" "username" {
+  name        = "/example/username"
+  description = "Username parameter"
+  type        = "SecureString"
+  value       = "admin"
+}
+
+
+
+resource "aws_ssm_parameter" "password" {
+  name        = "/example/password"
+  description = "Password parameter"
+  type        = "SecureString"
+  value       = "password"
+}
+
+
+
+# resource "aws_db_instance" "project-2" {
+#   allocated_storage    = 20
+#   identifier           = "mysql-db-02"
+#   engine               = "mysql"
+#   engine_version       = "5.7"
+#   instance_class       = "db.t2.micro"
+#   name                 = "db_name"
+#   username             = "admin"
+#   password             = "password"
+#   parameter_group_name = "default.mysql5.7"
+#   skip_final_snapshot  = true
+# }
+# Create Security Group for Database
+
+
 
 
 
