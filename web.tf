@@ -63,7 +63,7 @@ resource "aws_lb_listener" "lb_listener" {
 
 resource "aws_autoscaling_attachment" "alb_asg_attach" {
   autoscaling_group_name = aws_autoscaling_group.web-scaling-rule.id
-  alb_target_group_arn   = aws_lb_target_group.ec2_target_group.arn
+  lb_target_group_arn   = aws_lb_target_group.ec2_target_group.arn
 }
 
 resource "aws_autoscaling_policy" "web_policy_up" {

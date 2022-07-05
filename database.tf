@@ -4,7 +4,7 @@ resource "aws_db_instance" "project-1" {
   engine                              = "mysql"
   engine_version                      = "5.7"
   instance_class                      = "db.t2.micro"
-  name                                = "db_name"
+  db_name                             = "db_name"
   username                            = "admin"
   password                            = "password"
   port                                = "3306"
@@ -22,21 +22,21 @@ resource "aws_db_subnet_group" "db-group1" {
   }
 }
 
-resource "aws_db_instance" "project-2" {
-  allocated_storage                   = 20
-  identifier                          = "mysql-db-02"
-  engine                              = "mysql"
-  engine_version                      = "5.7"
-  instance_class                      = "db.t2.micro"
-  name                                = "db_name"
-  username                            = "admin"
-  password                            = "password"
-  port                                = "3306"
-  iam_database_authentication_enabled = true
-  #security_groups = [aws_security_group.SecurityGroupDB.id]
-  parameter_group_name = "default.mysql5.7"
-  skip_final_snapshot  = true
-}
+# resource "aws_db_instance" "project-2" {
+#   allocated_storage                   = 20
+#   identifier                          = "mysql-db-02"
+#   engine                              = "mysql"
+#   engine_version                      = "5.7"
+#   instance_class                      = "db.t2.micro"
+#   name                                = "db_name"
+#   username                            = "admin"
+#   password                            = "password"
+#   port                                = "3306"
+#   iam_database_authentication_enabled = true
+#   #security_groups = [aws_security_group.SecurityGroupDB.id]
+#   parameter_group_name = "default.mysql5.7"
+#   skip_final_snapshot  = true
+# }
 resource "aws_db_subnet_group" "db-group2" {
   name       = "db-group2"
   subnet_ids = [aws_subnet.private_subnet3a.id, aws_subnet.private_subnet4c.id]

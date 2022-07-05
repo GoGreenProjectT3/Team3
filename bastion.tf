@@ -1,23 +1,19 @@
 resource "aws_instance" "bastion" {
-  ami                         = "ami-0d9858aa3c6322f73"
+  ami                         = data.aws_ami.amznlx2.id
   subnet_id                   = aws_subnet.public_subnet1a.id
   instance_type               = "t2.micro"
   vpc_security_group_ids      = [aws_security_group.bastion.id]
   associate_public_ip_address = true
-<<<<<<< HEAD
-  key_name                    = "ggreen-key"
-=======
-  iam_instance_profile = "${aws_iam_instance_profile.bastion_profile.name}"
+  # iam_instance_profile = "${aws_iam_instance_profile.bastion_profile.name}"
   key_name                    = "gogreen"
->>>>>>> b405c469abc17f429a4e585b7ff5769c17657fad
   tags = {
     "Name" = "Bastion-EC2"
   }
 }
-resource "aws_eip" "bastion" {
-  instance = aws_instance.bastion.id
-  vpc      = true
-}
+# resource "aws_eip" "bastion" {
+#   instance = aws_instance.bastion.id
+#   vpc      = true
+# }
 
 
 resource "aws_security_group" "bastion" {

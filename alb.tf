@@ -135,7 +135,7 @@ resource "aws_lb" "app" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.elb_http.id]
-  subnets            = [aws_subnet.public_subnet1a.id, aws_subnet.public_subnet1a.id]
+  subnets            = [aws_subnet.public_subnet1a.id, aws_subnet.public_subnet2c.id]
   tags = {
     "Name" = "APP"
   }
@@ -160,7 +160,7 @@ resource "aws_lb_listener" "lb_listener1" {
 
 resource "aws_autoscaling_attachment" "alb_asg_attach1" {
   autoscaling_group_name = aws_autoscaling_group.ec2_scaling_rule1.id
-  alb_target_group_arn   = aws_lb_target_group.ec2_target_group1.arn
+  lb_target_group_arn   = aws_lb_target_group.ec2_target_group1.arn
 }
 
 resource "aws_autoscaling_policy" "app_policy_up" {

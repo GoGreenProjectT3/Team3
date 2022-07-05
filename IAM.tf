@@ -134,42 +134,40 @@ resource "aws_iam_account_password_policy" "strict" {
 
 #Create IAM role
 
-resource "aws_iam_role" "EC2-JENKINSROLE" {
-  name = "EC2-JENKINSROLE"
-=======
-resource "aws_iam_role" "EC2-role" {
-  name = "EC2-role"
->>>>>>> b405c469abc17f429a4e585b7ff5769c17657fad
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Action = "sts:AssumeRole"
-        Effect = "Allow"
-        Sid    = ""
-        Principal = {
-          Service = "ec2.amazonaws.com"
-        }
-      },
-    ]
-  })
-}
+# resource "aws_iam_role" "EC2-JENKINSROLE" {
+#   name = "EC2-JENKINSROLE"
+# }
+# resource "aws_iam_role" "EC2-JENKINSROLE" {
+#   name = "EC2-role"
+#   assume_role_policy = jsonencode({
+#     Version = "2012-10-17"
+#     Statement = [
+#       {
+#         Action = "sts:AssumeRole"
+#         Effect = "Allow"
+#         Sid    = ""
+#         Principal = {
+#           Service = "ec2.amazonaws.com"
+#         }
+#       },
+#     ]
+#   })
+# }
 
-<<<<<<< HEAD
-# Attach role to policy
+# # Attach role to policy
 
-resource "aws_iam_role_policy_attachment" "EC2-role" {
-  role       = aws_iam_role.EC2-JENKINSROLE.name
-  policy_arn = "arn:aws:iam::432898149300:role/EC2-JENKINSROLE"
-}
+# resource "aws_iam_role_policy_attachment" "EC2-role" {
+#   role       = aws_iam_role.EC2-JENKINSROLE.name
+#   policy_arn = "arn:aws:iam::432898149300:role/EC2-JENKINSROLE"
+# }
 
-# Attach role an instance profile
+# # Attach role an instance profile
 
-resource "aws_iam_instance_profile" "ec2_profile" {
-  name       = "ec2_profile"
-  role       = aws_iam_role.EC2-JENKINSROLE.name
-}
-=======
+# resource "aws_iam_instance_profile" "ec2_profile" {
+#   name       = "ec2_profile"
+#   role       = aws_iam_role.EC2-JENKINSROLE.name
+# }
+
  /* # Attach role to policy
  resource "aws_iam_role_policy_attachment" "EC2-role" {
    role       = aws_iam_role.EC2-role.name
@@ -177,8 +175,8 @@ resource "aws_iam_instance_profile" "ec2_profile" {
  } */
 
   # Attach role to an instance profile
-  resource "aws_iam_instance_profile" "bastion_profile" {
-    name = "bastion_profile"
-    role = aws_iam_role.EC2-role.name
-  }
->>>>>>> b405c469abc17f429a4e585b7ff5769c17657fad
+  # resource "aws_iam_instance_profile" "bastion_profile" {
+  #   name = "bastion_profile"
+  #   role = aws_iam_role.EC2-role.name
+  # }
+
